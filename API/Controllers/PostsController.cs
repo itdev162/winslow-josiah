@@ -17,7 +17,8 @@ namespace API.Controllers
     {
         private readonly DataContext context;
 
-        public PostsController(DataContext context) {
+        public PostsController(DataContext context)
+        {
             this.context = context;
         }
 
@@ -48,7 +49,8 @@ namespace API.Controllers
         /// <param name="request">JSON request containing post fields</param>
         /// <returns>A new post</returns>
         [HttpPost]
-        public ActionResult<Post> Create([FromBody] Post request) {
+        public ActionResult<Post> Create([FromBody] Post request)
+        {
             var post = new Post
             {
                 Id = request.Id,
@@ -69,12 +71,13 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// PUT /put
+        /// PUT /post
         /// </summary>
         /// <param name="request">JSON request containing one or more updated post fields</param>
         /// <returns>An updated post</returns>
         [HttpPut]
-        public ActionResult<Post> Update([FromBody] Post request) {
+        public ActionResult<Post> Update([FromBody] Post request)
+        {
             var post = context.Posts.Find(request.Id);
 
             if (post == null)
@@ -95,6 +98,27 @@ namespace API.Controllers
             }
 
             throw new Exception("Error updating post");
+        }
+
+        /// <summary>
+        /// DELETE /post/id
+        /// </summary>
+        /// <param name="id">Post id</param>
+        /// <returns>The deleted post</returns>
+        [HttpDelete("{id}")]
+        public ActionResult<Post> Delete(Guid id)
+        {
+            var post = context.Posts.Find(id);
+            context.Posts.Remove(post);
+
+            var success = context.SaveChanges() > 0;
+
+            if (success)
+            {
+                return post;
+            }
+
+            throw new Exception("Error deleting post");
         }
     }
 }
