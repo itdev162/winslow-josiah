@@ -16,7 +16,7 @@ class App extends React.Component {
     .then((response) => {
       this.setState({
         posts: response.data
-      })
+      });
     })
     .catch((error) => {
       console.error(`Error fetching data: ${error}`);
