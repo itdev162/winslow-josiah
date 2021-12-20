@@ -67,7 +67,7 @@ class App extends React.Component {
     newPosts[index] = post;
 
     this.setState({
-      post: newPosts
+      posts: newPosts
     });
   };
 
@@ -95,12 +95,12 @@ class App extends React.Component {
               <Route path="/posts/:postId" element={
                 <Post post={post} />
               } />
-              <Route path="/new-post">
+              <Route path="/new-post" element={
                 <CreatePost onPostCreated={this.onPostCreated} />
-              </Route>
-              <Route path="/edit-post/:postId">
+              } />
+              <Route path="/edit-post/:postId" element={
                 <EditPost post={post} onPostUpdated={this.onPostUpdated} />
-              </Route>
+              } />
             </Routes>
           </main>
         </div>
