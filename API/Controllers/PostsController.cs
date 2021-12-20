@@ -109,6 +109,12 @@ namespace API.Controllers
         public ActionResult<Post> Delete(Guid id)
         {
             var post = context.Posts.Find(id);
+
+            if (post == null)
+            {
+                throw new Exception("Could not find post");
+            }
+
             context.Posts.Remove(post);
 
             var success = context.SaveChanges() > 0;
